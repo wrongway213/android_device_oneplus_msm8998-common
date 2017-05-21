@@ -111,7 +111,7 @@ PRODUCT_PACKAGES += \
 
 # Doze
 PRODUCT_PACKAGES += \
-    Doze
+    OneplusThreeDoze
 
 # Fingerprint
 PRODUCT_PACKAGES += \
