@@ -281,6 +281,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
+# Vendor properties
+-include $(LOCAL_PATH)/vendor_prop.mk
+
 # VNDK
 PRODUCT_PACKAGES += \
     vndk_package
