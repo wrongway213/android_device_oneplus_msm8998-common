@@ -22,7 +22,6 @@
 # definition file).
 #
 
-$(call inherit-product, device/oneplus/msm8998-common/permissions.mk)
 $(call inherit-product, device/oneplus/msm8998-common/hidl/hidl.mk)
 $(call inherit-product, vendor/oneplus/msm8998-common/msm8998-common-vendor.mk)
 
