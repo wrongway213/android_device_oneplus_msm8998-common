@@ -58,7 +58,7 @@ ro.bluetooth.wipower=true
 ro.qualcomm.cabl=0
 
 # Camera
-vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.oneplus.camera,com.android.camera,org.lineageos.snap
+vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.oneplus.camera,com.android.camera
 
 persist.camera.mobicat=2
 persist.camera.stats.debugexif=3080192
@@ -84,6 +84,9 @@ drm.service.enabled=true
 
 # FRP
 ro.frp.pst=/dev/block/bootdevice/by-name/config
+
+# Google Assistant
+ro.opa.eligible_device=true
 
 # Graphics
 ro.sf.lcd_density=420
@@ -195,5 +198,9 @@ sys.usb.controller=a800000.dwc3
 sys.usb.rndis.func.name=gsi
 sys.usb.rmnet.func.name=gsi
 
-# Wi-Fi
+# Vendor
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.vendor.patch.level=OxygenOS_5.1.5
+
+# WiFi
 wifi.interface=wlan0
