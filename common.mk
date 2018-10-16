@@ -108,10 +108,6 @@ PRODUCT_PACKAGES += \
     libqdMetaData \
     libqdMetaData.system
 
-# Doze
-PRODUCT_PACKAGES += \
-    OneplusThreeDoze
-
 # Fingerprint
 PRODUCT_PACKAGES += \
     fingerprintd \
