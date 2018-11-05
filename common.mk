@@ -276,7 +276,7 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    thermal.msm8998
+    android.hardware.thermal@1.1-service.oneplus5
 
 # USB
 PRODUCT_PACKAGES += \
