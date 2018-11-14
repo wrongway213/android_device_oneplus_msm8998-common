@@ -71,9 +71,9 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1900800
     write /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq 1958400
 	write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 1000
-	write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 6000
-	write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us 2000
-	write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us 6000
+	write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 8000
+	write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us 1000
+	write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us 8000
     # Core Control
     write /sys/devices/system/cpu/cpu4/core_ctl/min_cpus 2
     write /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres 60
@@ -89,6 +89,7 @@ on property:sys.boot_completed=1
 	write /sys/module/cpu_boost/parameters/input_boost_freq "0:1036800"
 	write /sys/module/cpu_boost/parameters/input_boost_enabled 1
 	write /sys/module/cpu_boost/parameters/input_boost_ms 0
+    write /sys/module/cpu_boost/parameters/dynamic_stune_boost 10
 
     # Enable bus-dcvs
     write /sys/class/devfreq/soc:qcom,cpubw/governor "bw_hwmon"
@@ -142,17 +143,12 @@ on property:sys.boot_completed=1
     # Disable sched boost
     write /proc/sys/kernel/sched_boost 0
 
-    # Adjust LMK Values
-	write /sys/module/lowmemorykiller/parameters/minfree "18432,23040,27648,32256,55296,80640"
-
     # Set moar writeback stuffs
     write /proc/sys/vm/dirty_ratio 20
     write /proc/sys/vm/dirty_background_ratio 10
 
     # Treat storage as non-rotational
     write /sys/block/sda/queue/rotational 0
-
-    write /sys/class/power_supply/usb/otg_switch 1
 
     # Set up big.LITTLE scheduler configuration
     write /proc/sys/kernel/sched_migration_fixup 1
