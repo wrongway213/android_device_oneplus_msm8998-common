@@ -63,6 +63,31 @@ on property:sys.boot_completed=1
 	write /sys/block/sde/queue/read_ahead_kb 1536
 	write /sys/block/sde/queue/nr_requests 256
 
+    on property:sys.usb.config=msc && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "msc"
+    rm /config/usb_gadget/g1/configs/b.1/f1
+    rm /config/usb_gadget/g1/configs/b.1/f2
+    rm /config/usb_gadget/g1/configs/b.1/f3
+    rm /config/usb_gadget/g1/configs/b.1/f4
+    rm /config/usb_gadget/g1/configs/b.1/f5
+    rm /config/usb_gadget/g1/configs/b.1/f6
+    write /config/usb_gadget/g1/bcdDevice 0x0404
+    write /config/usb_gadget/g1/bcdUSB 0x0200
+    write /config/usb_gadget/g1/bDeviceClass 0x00
+    write /config/usb_gadget/g1/bDeviceSubClass 0x00
+    write /config/usb_gadget/g1/bDeviceProtocol 0x00
+    write /config/usb_gadget/g1/idVendor 0x2a70 # default by factory
+    write /config/usb_gadget/g1/idProduct 0x9011 # default by factory
+    write /config/usb_gadget/g1/strings/0x409/manufacturer OnePlus
+    write /config/usb_gadget/g1/strings/0x409/product OnePlus
+    write /config/usb_gadget/g1/strings/0x409/serialnumber "11223344"
+    #write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/file ""
+    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/cdrom 1 # dafault value      
+    write /config/usb_gadget/g1/functions/mass_storage.0/lun.0/ro 1 # default value
+    symlink /config/usb_gadget/g1/functions/mass_storage.0 config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
+    setprop sys.usb.state ${sys.usb.config}
+
     #Set Governor and tuneables
 	write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "schedutil"
 	write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor "schedutil"
@@ -74,6 +99,10 @@ on property:sys.boot_completed=1
 	write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 8000
 	write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us 1000
 	write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us 8000
+
+    #Enable Adaptive LMK
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
+
     # Core Control
     write /sys/devices/system/cpu/cpu4/core_ctl/min_cpus 2
     write /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres 60
@@ -84,12 +113,6 @@ on property:sys.boot_completed=1
 
     # CPU is configured, re-enable thermal core control
     write /sys/module/msm_thermal/core_control/enabled 0
-
-    # Input boost configuration
-	write /sys/module/cpu_boost/parameters/input_boost_freq "0:1036800"
-	write /sys/module/cpu_boost/parameters/input_boost_enabled 1
-	write /sys/module/cpu_boost/parameters/input_boost_ms 0
-    write /sys/module/cpu_boost/parameters/dynamic_stune_boost 10
 
     # Enable bus-dcvs
     write /sys/class/devfreq/soc:qcom,cpubw/governor "bw_hwmon"
@@ -168,3 +191,4 @@ on property:sys.boot_completed=1
 
     # Is IOP even still a thing?
     start vendor.iop
+
